@@ -4,8 +4,17 @@ import {nanoid} from "nanoid"
 
 export default function App() {
 
+  //creo lo state to-do
   const [todos, setTodos] = React.useState([])
 
+  /*
+    creo la funzione che al click del btn genera un to-do
+    questo to-do è un'oggetto all'interno dell'arrey 
+    state to-do che è provvisto di id univo generato
+    con nanoid(), un valoree boolean per controllare 
+    se è completato o meno, un valore boolean per controllare
+    se è mostrato o meno ed infine un titolo
+  */
   function todoGenerator(event) {
     event.preventDefault()
     setTodos(oldTodo => [...oldTodo, {
@@ -17,6 +26,12 @@ export default function App() {
     console.log(event.target.title.value)
   }
 
+
+  /*
+    funzione filtro che permette di mostrare in base alla scelta dell'utente
+    solo i to-do che rispecchiano tale valore, il filtro avviene attraverso
+    il controllo del valore isDone
+  */
   function filter(event) {
     const {name} = event.target
     if (name === "all") {
@@ -51,6 +66,14 @@ export default function App() {
     }
   }
 
+
+  /* 
+    funzione che permette al click del checkbox presente nel todo di eliminarlo dalla lista
+    la funzione riceve come paramentro l'id del to-do di cui il check-box è stato premuto,
+    cicla lo state attraverso il metdo map() e controlla se l'id ricevuto in ingresso è uguale
+    all'id di ongi elemento. Se si allora ritorna un oggetto con tutte le caratteristiche 
+    dell'oggetto precedente immutate a parte per il valore isDone che lo all'opposto
+  */
   function setDone(id) {
       setTodos(oldTodo => oldTodo.map(todo => {
         return todo.id === id ? {
@@ -60,11 +83,16 @@ export default function App() {
       }))
   }
 
+
+  /*
+    fiunzione che riceve come paramentro l'id del to-do interessato e cicla con il metodo filter()
+    tutto lo state ritornando solo gli elementi con id differente a quello che riceve 
+  */
   function deleteTodo(id) {
     setTodos(oldTodo => oldTodo.filter(todo => todo.id != id))
   }
 
-  console.log(todos)
+  //setto una costante che cicla lo state todo e ritorna un component Todo con svariati attributi al suo interno
   const element = todos.map(todo => <Todo key={todo.id} id={todo.id} value={todo.title} isDone={todo.isDone} isShown={todo.isShown} setDone={() => setDone(todo.id)} delete={() => deleteTodo(todo.id)}/>)
 
   return(
