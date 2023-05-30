@@ -3,9 +3,16 @@ import Todo from "./components/Todo"
 import {nanoid} from "nanoid"
 
 export default function App() {
+  //creo lo state to-do che interagisce con il localstorage 
+  //per controllare se hai valori dello state todo salvati
+  const [todos, setTodos] = React.useState(
+    JSON.parse(localStorage.getItem("todos"))|| 
+   [])
 
-  //creo lo state to-do
-  const [todos, setTodos] = React.useState([])
+   //salvo lo state todo nel local storage
+  React.useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos))
+  }, [todos])
 
   /*
     creo la funzione che al click del btn genera un to-do
