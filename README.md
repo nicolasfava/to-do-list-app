@@ -1,2 +1,2 @@
-#To-do list app
-a simply but efficent to-do list app 
+# To-do list app
+Simply but efficent to-do list app
